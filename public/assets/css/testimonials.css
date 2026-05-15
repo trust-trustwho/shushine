@@ -1,0 +1,223 @@
+#testimonials-container {
+  padding: 120px 8%;
+  background: #0A0A0A;
+  overflow: hidden;
+}
+
+.testimonials-inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.testimonials-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.testimonials-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: #6B6B6B;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 14px;
+}
+
+.testimonials-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  color: #F5F0E8;
+  font-weight: 400;
+}
+
+/* Stage */
+.testimonials-stage {
+  position: relative;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.testimonials-track {
+  width: 100%;
+  position: relative;
+  min-height: 240px;
+}
+
+/* Each slide */
+.testimonial-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transform: translateX(40px);
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.testimonial-slide.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: all;
+  position: relative;
+}
+
+.testimonial-slide.exit-left {
+  opacity: 0;
+  transform: translateX(-40px);
+}
+
+.testimonial-slide.exit-right {
+  opacity: 0;
+  transform: translateX(40px);
+}
+
+/* Quote mark */
+.testimonial-quote-mark {
+  font-family: 'Playfair Display', serif;
+  font-size: 6rem;
+  color: #C8A96E;
+  opacity: 0.15;
+  line-height: 0.6;
+  margin-bottom: 24px;
+  user-select: none;
+}
+
+/* Quote text */
+.testimonial-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  color: #F5F0E8;
+  line-height: 1.75;
+  font-weight: 400;
+  font-style: italic;
+  margin: 0 0 32px 0;
+  quotes: none;
+}
+
+/* Meta */
+.testimonial-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.testimonial-divider {
+  width: 32px;
+  height: 1px;
+  background: #C8A96E;
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.testimonial-author {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.testimonial-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #F5F0E8;
+  letter-spacing: 0.05em;
+}
+
+.testimonial-location {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  color: #6B6B6B;
+  letter-spacing: 0.05em;
+}
+
+.testimonial-service-tag {
+  margin-left: auto;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #C8A96E;
+  border: 1px solid rgba(200, 169, 110, 0.3);
+  padding: 4px 12px;
+  border-radius: 50px;
+}
+
+/* Arrows */
+.testimonial-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #111111;
+  border: 1px solid #222222;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #6B6B6B;
+  transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  z-index: 2;
+}
+
+.testimonial-arrow:hover {
+  border-color: #C8A96E;
+  color: #C8A96E;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.testimonial-arrow.prev { left: -60px; }
+.testimonial-arrow.next { right: -60px; }
+
+/* Dots */
+.testimonial-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 48px;
+}
+
+.t-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2A2A2A;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease, width 0.3s ease;
+  padding: 0;
+}
+
+.t-dot.active {
+  background: #C8A96E;
+  width: 24px;
+  border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+  #testimonials-container {
+    padding: 80px 5%;
+  }
+  .testimonials-stage {
+    padding: 0 8px;
+  }
+  .testimonial-arrow {
+    display: none;
+  }
+  .testimonial-text {
+    font-size: 1rem;
+  }
+  .testimonial-meta {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .testimonial-service-tag {
+    margin-left: 0;
+  }
+}
