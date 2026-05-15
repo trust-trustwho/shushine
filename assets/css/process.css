@@ -1,0 +1,197 @@
+#process-container {
+  padding: 120px 8%;
+  background: #0A0A0A;
+}
+
+.process-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.process-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.process-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: #6B6B6B;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 14px;
+}
+
+.process-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  color: #F5F0E8;
+  font-weight: 400;
+}
+
+/* Timeline wrapper — relative container for the vertical line */
+.process-timeline {
+  position: relative;
+}
+
+/* Vertical line track — centered */
+.timeline-track {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+.timeline-bg {
+  position: absolute;
+  inset: 0;
+  background: #1E1E1E;
+}
+
+.timeline-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0%;
+  background: linear-gradient(to bottom, #C8A96E, #A8894E);
+  transition: none;
+}
+
+/* Each row */
+.process-row {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  align-items: center;
+  margin-bottom: 56px;
+  position: relative;
+  z-index: 1;
+}
+
+.process-empty {
+  min-height: 1px;
+}
+
+.process-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.t-diamond {
+  width: 10px;
+  height: 10px;
+  background: #F5F0E8;
+  border: 1px solid #F5F0E8;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease, transform 0.5s ease;
+  opacity: 0.3;
+}
+
+.t-diamond.active {
+  background: #C8A96E;
+  border-color: #C8A96E;
+  opacity: 1;
+  box-shadow: 0 0 16px rgba(200, 169, 110, 0.6), 0 0 32px rgba(200, 169, 110, 0.25);
+  transform: rotate(45deg) scale(1.3);
+}
+
+.process-row.left .process-card { margin-right: 32px; }
+.process-row.right .process-card { margin-left: 32px; }
+
+
+/* Card */
+.process-card {
+  background: #111111;
+  border: 1px solid #1E1E1E;
+  border-radius: 6px;
+  padding: 28px 32px;
+  opacity: 0;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+
+
+.process-card:hover {
+  border-color: #C8A96E;
+  box-shadow: 0 8px 32px rgba(200, 169, 110, 0.08);
+}
+
+.process-card-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #F5F0E8;
+  margin-bottom: 8px;
+}
+
+.process-card-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  color: #6B6B6B;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Perspective for 3D card animation */
+.process-timeline {
+  perspective: 1400px;
+  perspective-origin: center center;
+}
+
+@media (max-width: 768px) {
+  #process-container {
+    padding: 80px 5%;
+  }
+  .process-timeline::before,
+  .timeline-track {
+    left: 16px !important;
+    transform: none !important;
+  }
+  .timeline-fill {
+    left: 16px !important;
+    transform: none !important;
+  }
+  .process-row {
+    grid-template-columns: 32px 1fr !important;
+    grid-template-rows: auto;
+    margin-bottom: 32px;
+    gap: 0;
+  }
+  .process-row.left,
+  .process-row.right {
+    grid-template-columns: 32px 1fr !important;
+  }
+  .process-empty {
+    display: none !important;
+  }
+  .process-center {
+    grid-column: 1;
+    grid-row: 1;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+  .process-row.left .process-card,
+  .process-row.right .process-card {
+    grid-column: 2;
+    grid-row: 1;
+    margin-left: 12px !important;
+    margin-right: 0 !important;
+  }
+  .process-card {
+    padding: 20px 16px;
+  }
+  .process-card-title {
+    font-size: 0.95rem;
+  }
+}

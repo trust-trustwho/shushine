@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shushine | Premium Shoe Care</title>
+    <meta name="description" content="Premium shoe cleaning service — precision, care, and elegance in every detail.">
+    <!-- Preload Critical Assets -->
+    <link rel="preload" href="assets/css/base.css" as="style">
+    <link rel="preload" href="assets/js/main.js" as="script">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/navbar.css">
+    <link rel="stylesheet" href="assets/css/hero.css">
+    <link rel="stylesheet" href="assets/css/sneaker3d.css">
+    <link rel="stylesheet" href="assets/css/about.css">
+    <link rel="stylesheet" href="assets/css/services.css">
+    <link rel="stylesheet" href="assets/css/process.css">
+    <link rel="stylesheet" href="assets/css/testimonials.css">
+    <link rel="stylesheet" href="assets/css/cta.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <h1 class="logo">SHUSHINE</h1>
+    </div>
+
+    <!-- Sections will be injected here -->
+    <div id="app" style="opacity: 0; visibility: hidden;">
+        <div id="navbar-container"></div>
+        <main>
+            <div id="hero-container"></div>
+            <div id="sneaker3d-container"></div>
+            <div id="about-container"></div>
+            <div id="services-container"></div>
+            <div id="process-container"></div>
+            <div id="testimonials-container"></div>
+            <div id="cta-container"></div>
+        </main>
+        <div id="footer-container"></div>
+    </div>
+
+    <!-- Three.js & GLTFLoader -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+
+    <!-- GSAP & Lenis -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="assets/js/lenis.js"></script>
+    <script src="assets/js/animations.js"></script>
+    <script src="assets/js/navbar.js"></script>
+    <script src="assets/js/hero.js"></script>
+    <script src="assets/js/sneaker3d.js"></script>
+    <script src="assets/js/services.js"></script>
+    <script src="assets/js/process.js"></script>
+    <script src="assets/js/cta.js"></script>
+    <script src="assets/js/testimonials.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

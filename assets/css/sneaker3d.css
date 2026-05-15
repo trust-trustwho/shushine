@@ -1,0 +1,244 @@
+.sneaker3d-section {
+    position: relative;
+    height: 300vh; /* Scroll through */
+    background-color: var(--bg-color);
+}
+
+.sneaker3d-label {
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #6B6B6B;
+    z-index: 10;
+}
+
+.sneaker3d-sticky-container {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#sneaker3d-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none; /* Let mouse events pass through to container */
+    /* Filter initial state */
+    filter: saturate(0.2) brightness(0.55) sepia(0.4) contrast(1.5);
+}
+
+/* Panels */
+.sneaker3d-panel {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 220px;
+    z-index: 5;
+    pointer-events: none;
+    font-family: var(--font-body);
+}
+
+.left-panel {
+    left: 5%;
+}
+
+.right-panel {
+    right: 5%;
+    text-align: right;
+}
+
+.left-panel .panel-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: #6B6B6B;
+    text-transform: uppercase;
+}
+
+.right-panel .panel-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--accent-color);
+    text-transform: uppercase;
+}
+
+.left-panel .panel-heading {
+    font-size: 1.6rem;
+    color: #8B7355;
+    font-weight: 600;
+    margin: 8px 0;
+}
+
+.right-panel .panel-heading {
+    font-size: 1.6rem;
+    color: var(--accent-color);
+    font-weight: 600;
+    margin: 8px 0;
+}
+
+.left-panel .panel-divider {
+    width: 40px;
+    height: 1px;
+    background-color: #3D2B1F;
+    margin: 12px 0;
+}
+
+.right-panel .panel-divider {
+    width: 40px;
+    height: 1px;
+    background-color: var(--accent-color);
+    margin: 12px 0;
+    margin-left: auto;
+}
+
+.left-panel .panel-list {
+    color: #6B6B6B;
+    font-size: 0.85rem;
+    line-height: 2;
+}
+
+.right-panel .panel-list {
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    line-height: 2;
+}
+
+.list-item {
+    will-change: transform, opacity;
+}
+
+/* Dirt Particles */
+.dirt-particle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: #3D2B1F;
+    opacity: 1;
+    z-index: 2;
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+.dirt-particle:nth-child(even) {
+    background-color: #5C4033;
+}
+
+.p1 { width: 5px; height: 5px; top: 30%; left: 40%; animation: float1 4s infinite ease-in-out; }
+.p2 { width: 8px; height: 8px; top: 40%; left: 55%; animation: float2 5s infinite ease-in-out; }
+.p3 { width: 4px; height: 4px; top: 60%; left: 35%; animation: float1 3s infinite ease-in-out; }
+.p4 { width: 6px; height: 6px; top: 35%; left: 60%; animation: float2 4.5s infinite ease-in-out; }
+.p5 { width: 7px; height: 7px; top: 50%; left: 45%; animation: float1 5.5s infinite ease-in-out; }
+.p6 { width: 4px; height: 4px; top: 45%; left: 65%; animation: float2 3.5s infinite ease-in-out; }
+.p7 { width: 5px; height: 5px; top: 65%; left: 50%; animation: float1 4.2s infinite ease-in-out; }
+.p8 { width: 8px; height: 8px; top: 25%; left: 48%; animation: float2 4.8s infinite ease-in-out; }
+.p9 { width: 6px; height: 6px; top: 55%; left: 58%; animation: float1 3.8s infinite ease-in-out; }
+.p10 { width: 4px; height: 4px; top: 40%; left: 30%; animation: float2 5.2s infinite ease-in-out; }
+.p11 { width: 7px; height: 7px; top: 70%; left: 40%; animation: float1 4.1s infinite ease-in-out; }
+.p12 { width: 5px; height: 5px; top: 30%; left: 70%; animation: float2 3.9s infinite ease-in-out; }
+
+@keyframes float1 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(15px, -20px); }
+}
+
+@keyframes float2 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-10px, -15px); }
+}
+
+@media (max-width: 768px) {
+  #sneaker3d-container, .sneaker3d-section {
+    height: 200vh;
+  }
+
+  #sneaker3d-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  /* Hide left/right side panels — show as top/bottom overlays instead */
+  [class*="panel-left"],
+  [class*="text-left"],
+  [class*="left-panel"] {
+    left: 50% !important;
+    right: auto !important;
+    top: 12% !important;
+    bottom: auto !important;
+    transform: translateX(-50%) !important;
+    width: 85% !important;
+    text-align: center !important;
+  }
+
+  [class*="panel-right"],
+  [class*="text-right"],
+  [class*="right-panel"] {
+    right: 50% !important;
+    left: auto !important;
+    bottom: 10% !important;
+    top: auto !important;
+    transform: translateX(50%) !important;
+    width: 85% !important;
+    text-align: center !important;
+  }
+
+  /* Label (KONDISI AWAL / SETELAH SHUSHINE) */
+  [class*="panel-left"] [class*="label"],
+  [class*="panel-right"] [class*="label"],
+  [class*="text-left"] span:first-child,
+  [class*="text-right"] span:first-child {
+    font-size: 0.55rem !important;
+    letter-spacing: 0.25em !important;
+  }
+
+  /* Heading (Kotor & Kusam / Bersih & Bersinar) */
+  [class*="panel-left"] [class*="heading"],
+  [class*="panel-right"] [class*="heading"],
+  [class*="panel-left"] h3,
+  [class*="panel-right"] h3 {
+    font-size: 1.1rem !important;
+    margin: 6px 0 !important;
+  }
+
+  /* Divider line */
+  [class*="panel-left"] [class*="divider"],
+  [class*="panel-right"] [class*="divider"] {
+    margin: 8px auto !important;
+  }
+
+  /* Point list items */
+  [class*="panel-left"] p,
+  [class*="panel-right"] p,
+  [class*="panel-left"] ul li,
+  [class*="panel-right"] ul li,
+  [class*="panel-left"] [class*="point"],
+  [class*="panel-right"] [class*="point"] {
+    font-size: 0.72rem !important;
+    line-height: 1.8 !important;
+    text-align: center !important;
+  }
+
+  /* Section label THE TRANSFORMATION */
+  [class*="transformation-label"],
+  [class*="section-label"] {
+    font-size: 0.5rem !important;
+    letter-spacing: 0.25em !important;
+    top: 4% !important;
+  }
+
+  /* Text overlay bottom */
+  [class*="text-overlay"],
+  [class*="overlay-text"] {
+    font-size: 1rem !important;
+    bottom: 5% !important;
+  }
+}
