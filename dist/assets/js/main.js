@@ -9,5 +9,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if (typeof initTestimonials === 'function') initTestimonials();
   if (typeof initCTA === 'function') initCTA();
   if (typeof initAnimations === 'function') initAnimations();
+  if (typeof initCounters === 'function') initCounters();
+  if (typeof initAboutCounters === 'function') initAboutCounters();
   if (typeof initLenis === 'function') initLenis();
 });

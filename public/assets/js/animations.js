@@ -26,32 +26,7 @@ function initGlobalAnimations(parent = document) {
         });
     }
 
-    // Number counters
-    const statNumbers = container.querySelectorAll('.stat-number');
-    statNumbers.forEach(stat => {
-        if (stat.dataset.animated) return;
-        stat.dataset.animated = 'true';
 
-        const target = parseInt(stat.getAttribute('data-target'));
-        const suffix = stat.getAttribute('data-suffix') || '';
-        
-        ScrollTrigger.create({
-            trigger: stat,
-            start: 'top 85%',
-            once: true,
-            onEnter: () => {
-                let obj = { val: 0 };
-                gsap.to(obj, {
-                    val: target,
-                    duration: 2,
-                    ease: 'power2.out',
-                    onUpdate: () => {
-                        stat.innerText = Math.floor(obj.val) + suffix;
-                    }
-                });
-            }
-        });
-    });
 
     // CTA Text Reveal
     const ctaText = container.querySelector('#cta-heading-text');
@@ -146,4 +121,86 @@ function initGlobalAnimations(parent = document) {
             onComplete: () => aboutContent.classList.remove('animating')
         });
     }
+}
+
+function initCounters() {
+  const counters = [
+    { selector: '[data-count="500"]', target: 500, suffix: '+' },
+    { selector: '[data-count="98"]', target: 98, suffix: '%' },
+    { selector: '[data-count="2"]', target: 2, suffix: '' }
+  ];
+
+  // Also try to find counter elements by looking for the labels
+  const allCounterEls = document.querySelectorAll('.counter-number, .stat-number, [class*="counter"], [class*="stat-num"]');
+
+  allCounterEls.forEach((el) => {
+    const target = parseInt(el.dataset.count || el.dataset.target || el.textContent) || 0;
+    if (!target) return;
+
+    const suffix = el.dataset.suffix || (el.textContent.includes('+') ? '+' : el.textContent.includes('%') ? '%' : '');
+
+    gsap.fromTo({ val: 0 }, { val: target }, {
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      },
+      duration: 2,
+      ease: 'power2.out',
+      onUpdate: function() {
+        el.textContent = Math.round(this.targets()[0].val) + suffix;
+      }
+    });
+  });
+}
+
+// Also hardcode the three specific about counters by searching text content
+function initAboutCounters() {
+  const statNumbers = document.querySelectorAll('.about-stat-number, .stat-value, [class*="about"] [class*="number"], [class*="counter"]');
+
+  if (statNumbers.length === 0) {
+    // Fallback: find by parent label text
+    const allStats = document.querySelectorAll('[class*="stat"], [class*="counter-wrap"], [class*="about-stat"]');
+    allStats.forEach(stat => {
+      const numEl = stat.querySelector('h3, h4, .number, span:first-child, div:first-child');
+      if (!numEl) return;
+      const text = numEl.textContent.trim();
+      const num = parseInt(text);
+      if (!num || isNaN(num)) return;
+      const suffix = text.replace(num.toString(), '').trim();
+
+      gsap.fromTo({ val: 0 }, { val: num }, {
+        scrollTrigger: {
+          trigger: numEl,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        },
+        duration: 2,
+        ease: 'power2.out',
+        onUpdate: function() {
+          numEl.textContent = Math.round(this.targets()[0].val) + suffix;
+        }
+      });
+    });
+    return;
+  }
+
+  const targets = [500, 98, 2];
+  const suffixes = ['+', '%', ''];
+
+  statNumbers.forEach((el, i) => {
+    if (targets[i] === undefined) return;
+    gsap.fromTo({ val: 0 }, { val: targets[i] }, {
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      },
+      duration: 2,
+      ease: 'power2.out',
+      onUpdate: function() {
+        el.textContent = Math.round(this.targets()[0].val) + suffixes[i];
+      }
+    });
+  });
 }
