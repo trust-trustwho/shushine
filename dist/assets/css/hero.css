@@ -138,27 +138,88 @@
     50% { transform: translateY(10px); }
 }
 
+
 @media (max-width: 768px) {
-  #hero-container, .hero-section {
-    padding: 0 6%;
-    min-height: 100svh;
+  #hero-container,
+  .hero-section,
+  section#hero-container {
+    padding: 0 6% !important;
+    min-height: 100svh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    overflow: hidden !important;
   }
-  .hero-heading, h1.hero-heading {
-    font-size: clamp(2.4rem, 11vw, 4rem) !important;
-    line-height: 1.15;
+
+  .hero-content,
+  .container,
+  [class*="hero-inner"],
+  [class*="hero-wrap"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
-  .hero-subtext, .hero-subtitle {
-    font-size: 0.9rem;
-    max-width: 100%;
+
+  .hero-heading,
+  h1.hero-heading,
+  [class*="hero-heading"] {
+    font-size: clamp(2.6rem, 12vw, 4.5rem) !important;
+    line-height: 1.1 !important;
+    width: 100% !important;
   }
-  .hero-cta, .hero-buttons {
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
+
+  .hero-subtext,
+  .hero-subtitle,
+  [class*="hero-sub"] {
+    font-size: 0.9rem !important;
+    max-width: 100% !important;
+    line-height: 1.6 !important;
+    margin-top: 16px !important;
   }
-  .hero-bottom {
-    flex-direction: column;
-    gap: 8px;
+
+  .hero-cta,
+  .hero-buttons,
+  [class*="hero-cta"] {
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: flex-start !important;
+    margin-top: 32px !important;
+    width: 100% !important;
   }
-  .scroll-indicator { align-self: center; }
+
+  .hero-bottom,
+  [class*="hero-bottom"] {
+    position: absolute !important;
+    bottom: 32px !important;
+    left: 6% !important;
+    right: 6% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-end !important;
+  }
+}
+
+
+@media (max-width: 480px) {
+  #hero-container, .hero-section, #hero {
+    padding: 0 5% !important;
+    min-height: 100svh !important;
+    width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .hero-heading, h1, .hero-heading * {
+    font-size: clamp(2rem, 10vw, 3rem) !important;
+    line-height: 1.15 !important;
+    word-break: keep-all !important;
+  }
+
+  .hero-subtext, .hero-subtitle, .hero-description {
+    font-size: 0.85rem !important;
+    line-height: 1.6 !important;
+  }
 }
