@@ -57,35 +57,7 @@ function initProcess() {
     });
   });
 
-  document.querySelectorAll('.t-diamond').forEach((diamond, i) => {
-    // Get the corresponding card in the same row
-    const row = diamond.closest('.process-row');
-    const card = row ? row.querySelector('.process-card') : diamond;
-
-    // Pop-in from scale 0
-    gsap.from(diamond, {
-      scrollTrigger: {
-        trigger: diamond,
-        start: 'top 85%',
-        toggleActions: 'play none none none'
-      },
-      scale: 0,
-      duration: 0.5,
-      ease: 'back.out(2.5)'
-    });
-
-    // Activate gold when card reaches viewport
-    ScrollTrigger.create({
-      trigger: card,
-      start: 'top 75%',
-      onEnter: () => {
-        diamond.classList.add('active');
-      },
-      onLeaveBack: () => {
-        diamond.classList.remove('active');
-      }
-    });
-  });
+  initProcessDots();
   // Progressive timeline fill
   const timelineEl = document.querySelector('.process-timeline');
   const progressEl = document.getElementById('timeline-progress');
@@ -103,6 +75,58 @@ function initProcess() {
   }
 
 
+}
+
+function initProcessDots() {
+  const dots = document.querySelectorAll('.t-diamond');
+  
+  if (dots.length === 0) return;
+
+  dots.forEach((dot) => {
+    // Set initial state
+    dot.style.background = '#F5F0E8';
+    dot.style.borderColor = '#F5F0E8';
+    dot.style.opacity = '0.25';
+    dot.style.transform = 'rotate(45deg) scale(1)';
+
+    const row = dot.closest('.process-row');
+    const card = row ? row.querySelector('.process-card') : dot;
+    const trigger = card || dot;
+
+    // Pop-in
+    gsap.from(dot, {
+      scrollTrigger: {
+        trigger: trigger,
+        start: 'top 88%',
+        toggleActions: 'play none none none'
+      },
+      scale: 0,
+      duration: 0.6,
+      ease: 'back.out(2)'
+    });
+
+    // Color activation using IntersectionObserver as fallback
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          dot.style.transition = 'background 0.8s cubic-bezier(0.25,0.46,0.45,0.94), border-color 0.8s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.8s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.8s ease, transform 0.8s cubic-bezier(0.34,1.56,0.64,1)';
+          dot.style.background = '#C8A96E';
+          dot.style.borderColor = '#C8A96E';
+          dot.style.opacity = '1';
+          dot.style.transform = 'rotate(45deg) scale(1.4)';
+          dot.style.boxShadow = '0 0 20px rgba(200,169,110,0.55), 0 0 40px rgba(200,169,110,0.2)';
+        } else {
+          dot.style.background = '#F5F0E8';
+          dot.style.borderColor = '#F5F0E8';
+          dot.style.opacity = '0.25';
+          dot.style.transform = 'rotate(45deg) scale(1)';
+          dot.style.boxShadow = 'none';
+        }
+      });
+    }, { threshold: 0.3, rootMargin: '0px 0px -20% 0px' });
+
+    observer.observe(trigger);
+  });
 }
 
 if (document.readyState === 'loading') {
