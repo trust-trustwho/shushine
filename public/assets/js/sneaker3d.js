@@ -1,7 +1,7 @@
 function initSneaker3D() {
     console.log("Initializing Sneaker 3D Animation");
 
-    const container = document.querySelector('.sneaker3d-sticky-container');
+    const container = document.querySelector('.sneaker3d-sticky');
     const canvas = document.getElementById('sneaker3d-canvas');
     if (!container || !canvas) return;
 
@@ -16,7 +16,7 @@ function initSneaker3D() {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    
     renderer.powerPreference = 'high-performance';
     renderer.antialias = window.devicePixelRatio < 2;
 
@@ -58,6 +58,9 @@ function initSneaker3D() {
     goldAccentLight.position.set(1, 0, 1);
     scene.add(goldAccentLight);
 
+    let currentProgress = 0;
+    let targetProgress = 0;
+    let globalUpdateAnimation = null;
     let sneakerModel = null;
     let isModelLoaded = false;
 
@@ -133,6 +136,8 @@ function initSneaker3D() {
             sneakerModel.rotation.x += (targetRotationX - sneakerModel.rotation.x) * 0.05;
             sneakerModel.rotation.y += (targetRotationY - sneakerModel.rotation.y) * 0.05;
         }
+        currentProgress += (targetProgress - currentProgress) * 0.05;
+        if (globalUpdateAnimation) globalUpdateAnimation(currentProgress);
 
         renderer.render(scene, camera);
     }
@@ -153,14 +158,7 @@ function initSneaker3D() {
 
     // 7. GSAP ScrollTrigger Setup
     function setupScrollAnimation(modelGroup) {
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: '.sneaker3d-section',
-                start: 'top top',
-                end: 'bottom bottom',
-                scrub: 1 
-            }
-        });
+        const tl = gsap.timeline({ paused: true });
 
         const filterObj = {
             saturate: 0.2,
@@ -186,7 +184,7 @@ function initSneaker3D() {
         // Stagger left panel items on entry
         gsap.from('#panel-dirty .list-item', {
             scrollTrigger: {
-                trigger: '.sneaker3d-section',
+                trigger: '#sneaker3d-container',
                 start: 'top 80%',
             },
             y: 10,
@@ -221,7 +219,7 @@ function initSneaker3D() {
         tl.to('.dirt-particle', { opacity: 0, duration: 0.8, ease: "none" }, 0);
 
         // Fade out left panel from 0 to 45% of total scroll (time 0 to 0.9)
-        tl.to('#panel-dirty', { opacity: 0, duration: 0.9, ease: "none" }, 0);
+        
 
         // PHASE 2: 50% -> 100% (mapped to timeline time 1 -> 2)
         
@@ -243,12 +241,42 @@ function initSneaker3D() {
         }, 1);
 
         // Fade in right panel from 55% to 100% of total scroll (time 1.1 to 2.0)
-        tl.fromTo('#panel-clean', { opacity: 0 }, { opacity: 1, duration: 0.9, ease: "none" }, 1.1);
+        
 
         // Stagger right panel items as they fade in
         tl.fromTo('#panel-clean .list-item', 
             { y: 10, opacity: 0 }, 
             { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: "power2.out" }, 
         1.1);
+
+        function updateAnimation(progress) {
+            tl.progress(progress);
+
+            const leftPanel = document.getElementById('panel-dirty');
+            if (leftPanel) {
+                if (progress <= 0.35) leftPanel.style.opacity = 1;
+                else if (progress >= 0.5) leftPanel.style.opacity = 0;
+                else leftPanel.style.opacity = 1 - ((progress - 0.35) / 0.15);
+            }
+
+            const rightPanel = document.getElementById('panel-clean');
+            if (rightPanel) {
+                if (progress <= 0.55) rightPanel.style.opacity = 0;
+                else if (progress >= 0.7) rightPanel.style.opacity = 1;
+                else rightPanel.style.opacity = (progress - 0.55) / 0.15;
+            }
+        }
+
+        globalUpdateAnimation = updateAnimation;
+        ScrollTrigger.create({
+            trigger: '#sneaker3d-container',
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 3,
+            anticipatePin: 1,
+            onUpdate: (self) => {
+                targetProgress = self.progress;
+            }
+        });
     }
 }

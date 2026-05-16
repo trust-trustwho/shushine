@@ -1,7 +1,8 @@
-.sneaker3d-section {
-    position: relative;
-    height: 300vh; /* Scroll through */
-    background-color: var(--bg-color);
+#sneaker3d-container {
+  position: relative;
+  height: 400vh;
+  width: 100%;
+  overflow: visible !important;
 }
 
 .sneaker3d-label {
@@ -17,15 +18,14 @@
     z-index: 10;
 }
 
-.sneaker3d-sticky-container {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.sneaker3d-sticky {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1;
 }
 
 #sneaker3d-canvas {
@@ -158,7 +158,7 @@
 }
 
 @media (max-width: 768px) {
-  #sneaker3d-container, .sneaker3d-section {
+  #sneaker3d-container {
     height: 200vh;
   }
 
@@ -240,5 +240,25 @@
   [class*="overlay-text"] {
     font-size: 1rem !important;
     bottom: 5% !important;
+  }
+}
+
+
+
+.sneaker3d-sticky canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media (max-width: 768px) {
+  #sneaker3d-container {
+    height: 350vh !important;
+  }
+
+  .sneaker3d-sticky {
+    height: 100svh !important;
   }
 }

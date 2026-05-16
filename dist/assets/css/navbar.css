@@ -186,3 +186,19 @@
     display: flex;
   }
 }
+
+@media (max-width: 768px) {
+  nav, .navbar, [class*="navbar"] {
+    width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+
+  .navbar-inner, [class*="navbar-inner"] {
+    padding: 0 !important;
+    width: 100% !important;
+  }
+}
