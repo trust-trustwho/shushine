@@ -182,8 +182,9 @@ function initAboutCounters() {
             { val: 0 },
             { val: targets[i] },
             {
-              duration: 2.5,
-              ease: 'power2.out',
+              duration: 3.5,
+              delay: i * 0.2,
+              ease: 'expo.out',
               onUpdate: function () {
                 el.textContent = Math.round(this.targets()[0].val) + suffixes[i];
               }
@@ -221,8 +222,9 @@ function initAboutCounters() {
           { val: 0 },
           { val: num },
           {
-            duration: 2.5,
-            ease: 'power2.out',
+            duration: 3.5,
+            delay: i * 0.2,
+            ease: 'expo.out',
             onUpdate: function () {
               el.textContent = Math.round(this.targets()[0].val) + suffix;
             }
