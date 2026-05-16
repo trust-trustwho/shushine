@@ -155,6 +155,33 @@ function initCounters() {
 }
 
 // Also hardcode the three specific about counters by searching text content
+function smoothCount(el, target, suffix, delay, duration) {
+  setTimeout(() => {
+    const startTime = performance.now();
+    const startVal = 0;
+
+    function easeOutExpo(t) {
+      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    }
+
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutExpo(progress);
+      const current = Math.round(startVal + (target - startVal) * eased);
+      el.textContent = current + suffix;
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        el.textContent = target + suffix;
+      }
+    }
+
+    requestAnimationFrame(update);
+  }, delay);
+}
+
 function initAboutCounters() {
   // Wait for ScrollTrigger to be ready
   gsap.registerPlugin(ScrollTrigger);
@@ -178,18 +205,7 @@ function initAboutCounters() {
         start: 'top 90%',
         once: true,
         onEnter: () => {
-          gsap.fromTo(
-            { val: 0 },
-            { val: targets[i] },
-            {
-              duration: 3.5,
-              delay: i * 0.2,
-              ease: 'expo.out',
-              onUpdate: function () {
-                el.textContent = Math.round(this.targets()[0].val) + suffixes[i];
-              }
-            }
-          );
+          smoothCount(el, targets[i], suffixes[i], i * 200, 3000);
         }
       });
     });
@@ -218,18 +234,7 @@ function initAboutCounters() {
       start: 'top 90%',
       once: true,
       onEnter: () => {
-        gsap.fromTo(
-          { val: 0 },
-          { val: num },
-          {
-            duration: 3.5,
-            delay: i * 0.2,
-            ease: 'expo.out',
-            onUpdate: function () {
-              el.textContent = Math.round(this.targets()[0].val) + suffix;
-            }
-          }
-        );
+        smoothCount(el, num, suffix, i * 200, 3000);
       }
     });
   });
