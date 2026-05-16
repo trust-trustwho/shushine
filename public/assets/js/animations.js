@@ -156,50 +156,78 @@ function initCounters() {
 
 // Also hardcode the three specific about counters by searching text content
 function initAboutCounters() {
-  const statNumbers = document.querySelectorAll('.about-stat-number, .stat-value, [class*="about"] [class*="number"], [class*="counter"]');
+  // Wait for ScrollTrigger to be ready
+  gsap.registerPlugin(ScrollTrigger);
 
-  if (statNumbers.length === 0) {
-    // Fallback: find by parent label text
-    const allStats = document.querySelectorAll('[class*="stat"], [class*="counter-wrap"], [class*="about-stat"]');
-    allStats.forEach(stat => {
-      const numEl = stat.querySelector('h3, h4, .number, span:first-child, div:first-child');
-      if (!numEl) return;
-      const text = numEl.textContent.trim();
-      const num = parseInt(text);
-      if (!num || isNaN(num)) return;
-      const suffix = text.replace(num.toString(), '').trim();
+  const statElements = document.querySelectorAll(
+    '.about-stat-number, .stat-value, .counter-number, [class*="stat-num"]'
+  );
 
-      gsap.fromTo({ val: 0 }, { val: num }, {
-        scrollTrigger: {
-          trigger: numEl,
-          start: 'top 85%',
-          toggleActions: 'play none none none'
-        },
-        duration: 2,
-        ease: 'power2.out',
-        onUpdate: function() {
-          numEl.textContent = Math.round(this.targets()[0].val) + suffix;
+  const targets = [500, 98, 2];
+  const suffixes = ['+', '%', ''];
+
+  // If specific classes found
+  if (statElements.length >= 2) {
+    statElements.forEach((el, i) => {
+      if (targets[i] === undefined) return;
+      // Reset to 0 first
+      el.textContent = '0' + suffixes[i];
+
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 90%',
+        once: true,
+        onEnter: () => {
+          gsap.fromTo(
+            { val: 0 },
+            { val: targets[i] },
+            {
+              duration: 2.5,
+              ease: 'power2.out',
+              onUpdate: function () {
+                el.textContent = Math.round(this.targets()[0].val) + suffixes[i];
+              }
+            }
+          );
         }
       });
     });
     return;
   }
 
-  const targets = [500, 98, 2];
-  const suffixes = ['+', '%', ''];
+  // Fallback: find by parent containers
+  const aboutSection = document.getElementById('about-container');
+  if (!aboutSection) return;
 
-  statNumbers.forEach((el, i) => {
-    if (targets[i] === undefined) return;
-    gsap.fromTo({ val: 0 }, { val: targets[i] }, {
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 85%',
-        toggleActions: 'play none none none'
-      },
-      duration: 2,
-      ease: 'power2.out',
-      onUpdate: function() {
-        el.textContent = Math.round(this.targets()[0].val) + suffixes[i];
+  const numEls = aboutSection.querySelectorAll('h3, h4, .number, [class*="count"]');
+  let found = [];
+
+  numEls.forEach(el => {
+    const num = parseInt(el.textContent);
+    if (!isNaN(num) && num > 0) found.push({ el, num });
+  });
+
+  found.forEach(({ el, num }, i) => {
+    const suffix = suffixes[i] || '';
+    // Reset to 0
+    el.textContent = '0' + suffix;
+
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 90%',
+      once: true,
+      onEnter: () => {
+        gsap.fromTo(
+          { val: 0 },
+          { val: num },
+          {
+            duration: 2.5,
+            ease: 'power2.out',
+            onUpdate: function () {
+              el.textContent = Math.round(this.targets()[0].val) + suffix;
+            }
+          }
+        );
       }
     });
   });
